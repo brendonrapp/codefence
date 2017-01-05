@@ -5,7 +5,7 @@ module Octopress
   module Codefence
     Jekyll::Hooks.register [:posts, :pages, :documents], :pre_render do |item, payload|
       if item.respond_to?(:ext)
-        ext = item.ext
+        ext = item.data['ext']
       else
         ext = nil
       end
@@ -21,7 +21,7 @@ module Octopress
         @ext     = ext
         @aliases = aliases
       end
-      
+
       def render
         @input.encode!("UTF-8")
         @input = sub_option_comment(@input)
@@ -84,7 +84,6 @@ module Octopress
         end
         CodeHighlighter.parse_markup(markup, defaults)
       end
-
 
       def get_code(code, options)
         options[:aliases] = @aliases || {}
